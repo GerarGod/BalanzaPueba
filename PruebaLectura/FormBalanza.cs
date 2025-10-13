@@ -90,7 +90,7 @@ namespace PruebaLectura
                 serialPort.StopBits = (StopBits)int.Parse(ClsGlobalVariables.strConfigserialPortBitsStopBits);
                 serialPort.Handshake = (Handshake)int.Parse(ClsGlobalVariables.strHandshake); 
                 */
-                
+                /*
                 serialPort = new SerialPort();
                 serialPort.PortName = ClsGlobalVariables.strConfigSerialPortName;
                 serialPort.BaudRate = 9600;              // o el que corresponda
@@ -100,7 +100,22 @@ namespace PruebaLectura
                 serialPort.Handshake = Handshake.None;   // o Handshake.RequestToSend si realmente necesitás control de flujo HW
                 serialPort.Encoding = Encoding.ASCII;    // para que no meta '?' por bytes fuera del rango ASCII
                 serialPort.NewLine = "\r\n";             // CR+LF de fin de mensaje
-                
+                */
+
+                serialPort = new SerialPort
+                {
+                    PortName = txtPuertoSerie.Text,   // ejemplo: COM6
+                    BaudRate = 9600,
+                    DataBits = 7,
+                    Parity = Parity.Even,
+                    StopBits = StopBits.Two,
+                    Handshake = Handshake.None,
+                    Encoding = Encoding.ASCII,
+                    NewLine = "\r\n",
+                    ReadTimeout = 500
+                };
+
+
 
 
 
@@ -195,7 +210,7 @@ namespace PruebaLectura
                         // Obtener la fecha y hora actual
                         DateTime now = DateTime.Now;
                         string strArchivo = $"{now:yyyyMMdd_HHmmss}";
-                        nombreArchivo = $"{strArchivo}_FullParametros.txt";
+                        nombreArchivo = $"{strArchivo}_ConModificaciones.txt";
 
                         // Abre el archivo de texto para registro continuo de datos
                         logFile = new StreamWriter(nombreArchivo, true); // 'true' para añadir datos al final del archivo existente
@@ -216,115 +231,198 @@ namespace PruebaLectura
         }
 
         /**************************************************Lectura Asincrona ********************************/
+        /*
+                private async Task leerDatosBalanzaAsync()
+                {                    // Definir el carácter STX usando su valor ASCII
+                    char stx = (char)2;
+                    // Definir el carácter Chr(13) usando su valor ASCII
+                    char chr13 = (char)13;
+                    string strMensajeCompleto = "";
+                    string strPeso = "";
+                    string strTara = "";
+                    string strTmpLog = "";
+                    string strMensaje = "";
+                    this.srtBuffer = "";
+
+                    while (continuarLeyendo)
+                    {
+                        try
+                        {
+                            int intStxPosIni;
+                            int intPosFinMsj;
+                            // Leer datos disponibles en el buffer de entrada
+                            strMensaje = serialPort.ReadLine();
+                            LogDatosRecividos("NroLinea:" + lngNroLinea.ToString() + "-receivedData:" + strMensaje);
+
+                            ObtenerCodigosAscii(strMensaje);
+
+                            // ' guardo los datos recividos en el buffer
+                            this.srtBuffer = this.srtBuffer + strMensaje;
+                            // Escribe los datos recibidos en el archivo de texto
+                            LogDatosRecividos("NroLinea:" + lngNroLinea.ToString() + "-srtBuffer:" + srtBuffer);
+
+                            //' Buscar el inicio de un mensaje válido,dato comienza con <STX>
+                            //' El carácter \u0002 es un carácter de control en la tabla ASCII y se denomina "Start of Text" (STX).
+                            //' ASCII del carácter \u0002 es 2
+                            //' Verificar si el dato comienza con <STX> == Chr(2)
+                            //'If Asc(Mid(incomingData, 1, 1)) = &H2 Then
+
+                            intStxPosIni = srtBuffer.IndexOf(stx);
+                            if (intStxPosIni > -1)
+                            {
+                                intPosFinMsj = srtBuffer.IndexOf(chr13, intStxPosIni);
+                                if (intPosFinMsj > -1)
+                                {
+                                    try
+                                    {
+                                        strMensajeCompleto = this.srtBuffer.Substring(intStxPosIni, intPosFinMsj - intStxPosIni);
+                                        //"\u0002\u0002\u0002*BC123456ABCDEF"
+                                        // Encuentra la posición del último '\u0002'
+                                        int lastIndex = strMensajeCompleto.LastIndexOf(stx);
+                                        strMensajeCompleto = strMensajeCompleto.Substring(lastIndex);
+
+                                        strPeso = strMensajeCompleto.Substring(4, 6);
+                                        strTara = strMensajeCompleto.Substring(10, 6);
+                                        this.Invoke((Action)(() =>
+                                        {
+                                            txtPeso.Text = strPeso;
+                                            txtTara.Text = strTara;
+                                            try
+                                            {
+                                                txtPesoTotal.Text = (long.Parse(strPeso.ToString()) + long.Parse(strTara.ToString())).ToString();
+                                            }
+                                            catch (Exception ex)
+                                            {
+                                                txtPesoTotal.Text = "0";
+                                                //LogDatosRecividos("Error obteniendo pesos: " + ex.Message);
+                                            }
+                                            //txtPesoTk.Text = txtPesoTotal.Text;
+
+                                        }));
+
+                                    }
+                                    catch (Exception ex)
+                                    {
+                                        LogDatosRecividos("Error obteniendo strMensajeCompleto: " + ex.Message);
+
+                                    }
+                                    // Aquí puedes procesar los datos recibidos según el protocolo de la balanza
+                                    strTmpLog = "NroLinea:" + lngNroLinea.ToString()
+                                                + "|strMensajeCompleto:" + strMensajeCompleto
+                                                + "|strMensajeCompletoLength:" + strMensajeCompleto.Length.ToString()
+                                                + "|strPeso:" + strPeso
+                                                + "|strPesoLength:" + strPeso.Length.ToString()
+                                                + "|strTara:" + strTara
+                                                + "|strTaraLength:" + strTara.Length.ToString()
+                                                + "|intStxPosIni:" + intStxPosIni.ToString()
+                                                + "|intPosFinMsj:" + intPosFinMsj.ToString();
+
+                                    //logFile.WriteLine
+                                    LogDatosRecividos(strTmpLog);
+                                    this.srtBuffer = "";
+                                    ++this.lngNroLinea;
+                                }
+                            }
+                        }
+                        catch (Exception ex)
+                        {
+                            //ex.StackTrace.
+                            if (continuarLeyendo)
+                            {
+                                Console.WriteLine("Error al leer datos: " + ex.Message);
+                                MessageBox.Show("Error al leer datos, error: " + ex.Message, "Error leerDatosBalanzaAsync", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                cmdStop_Click(null, null);
+                            }
+
+                        }
+                        Console.WriteLine("Leeee#########################################");
+
+                    }
+                    Console.WriteLine("termina********************************");
+                }
+        */
 
         private async Task leerDatosBalanzaAsync()
-        {                    // Definir el carácter STX usando su valor ASCII
-            char stx = (char)2;
-            // Definir el carácter Chr(13) usando su valor ASCII
-            char chr13 = (char)13;
-            string strMensajeCompleto = "";
-            string strPeso = "";
-            string strTara = "";
-            string strTmpLog = "";
-            string strMensaje = "";
-            this.srtBuffer = "";
+        {
+            char STX = (char)2;   // Inicio de texto
+            char CR = (char)13;   // Carriage Return (fin de mensaje)
+
+            string buffer = "";
+            string mensaje = "";
+            string peso = "";
+            string tara = "";
 
             while (continuarLeyendo)
             {
                 try
                 {
-                    int intStxPosIni;
-                    int intPosFinMsj;
-                    // Leer datos disponibles en el buffer de entrada
-                    strMensaje = serialPort.ReadLine();
-                    LogDatosRecividos("NroLinea:" + lngNroLinea.ToString() + "-receivedData:" + strMensaje);
+                    int byteLeido = serialPort.ReadByte(); // lectura bloqueante
+                    if (byteLeido == -1) continue;
 
-                    ObtenerCodigosAscii(strMensaje);
+                    char c = (char)byteLeido;
 
-                    // ' guardo los datos recividos en el buffer
-                    this.srtBuffer = this.srtBuffer + strMensaje;
-                    // Escribe los datos recibidos en el archivo de texto
-                    LogDatosRecividos("NroLinea:" + lngNroLinea.ToString() + "-srtBuffer:" + srtBuffer);
-
-                    //' Buscar el inicio de un mensaje válido,dato comienza con <STX>
-                    //' El carácter \u0002 es un carácter de control en la tabla ASCII y se denomina "Start of Text" (STX).
-                    //' ASCII del carácter \u0002 es 2
-                    //' Verificar si el dato comienza con <STX> == Chr(2)
-                    //'If Asc(Mid(incomingData, 1, 1)) = &H2 Then
-
-                    intStxPosIni = srtBuffer.IndexOf(stx);
-                    if (intStxPosIni > -1)
+                    if (c == STX)
                     {
-                        intPosFinMsj = srtBuffer.IndexOf(chr13, intStxPosIni);
-                        if (intPosFinMsj > -1)
+                        // Nuevo mensaje
+                        mensaje = "";
+                        mensaje += c;
+                    }
+                    else if (c == CR)
+                    {
+                        // Fin de mensaje
+                        LogDatosRecividos("Mensaje recibido: " + mensaje);
+
+                        // Ejemplo: *0 000006000000
+                        if (mensaje.Length >= 14)
                         {
                             try
                             {
-                                strMensajeCompleto = this.srtBuffer.Substring(intStxPosIni, intPosFinMsj - intStxPosIni);
-                                //"\u0002\u0002\u0002*BC123456ABCDEF"
-                                // Encuentra la posición del último '\u0002'
-                                int lastIndex = strMensajeCompleto.LastIndexOf(stx);
-                                strMensajeCompleto = strMensajeCompleto.Substring(lastIndex);
+                                peso = mensaje.Substring(4, 6);
+                                tara = mensaje.Substring(10, 6);
 
-                                strPeso = strMensajeCompleto.Substring(4, 6);
-                                strTara = strMensajeCompleto.Substring(10, 6);
                                 this.Invoke((Action)(() =>
                                 {
-                                    txtPeso.Text = strPeso;
-                                    txtTara.Text = strTara;
+                                    txtPeso.Text = peso;
+                                    txtTara.Text = tara;
                                     try
                                     {
-                                        txtPesoTotal.Text = (long.Parse(strPeso.ToString()) + long.Parse(strTara.ToString())).ToString();
+                                        txtPesoTotal.Text = (long.Parse(peso) + long.Parse(tara)).ToString();
                                     }
-                                    catch (Exception ex)
+                                    catch
                                     {
                                         txtPesoTotal.Text = "0";
-                                        //LogDatosRecividos("Error obteniendo pesos: " + ex.Message);
                                     }
-                                    //txtPesoTk.Text = txtPesoTotal.Text;
-
                                 }));
 
+                                LogDatosRecividos($"Peso:{peso} Tara:{tara}");
                             }
                             catch (Exception ex)
                             {
-                                LogDatosRecividos("Error obteniendo strMensajeCompleto: " + ex.Message);
-
+                                LogDatosRecividos("Error parseando mensaje: " + ex.Message);
                             }
-                            // Aquí puedes procesar los datos recibidos según el protocolo de la balanza
-                            strTmpLog = "NroLinea:" + lngNroLinea.ToString()
-                                        + "|strMensajeCompleto:" + strMensajeCompleto
-                                        + "|strMensajeCompletoLength:" + strMensajeCompleto.Length.ToString()
-                                        + "|strPeso:" + strPeso
-                                        + "|strPesoLength:" + strPeso.Length.ToString()
-                                        + "|strTara:" + strTara
-                                        + "|strTaraLength:" + strTara.Length.ToString()
-                                        + "|intStxPosIni:" + intStxPosIni.ToString()
-                                        + "|intPosFinMsj:" + intPosFinMsj.ToString();
-
-                            //logFile.WriteLine
-                            LogDatosRecividos(strTmpLog);
-                            this.srtBuffer = "";
-                            ++this.lngNroLinea;
                         }
+
+                        mensaje = "";
                     }
+                    else
+                    {
+                        mensaje += c;
+                    }
+                }
+                catch (TimeoutException)
+                {
+                    // no hay datos, continuar leyendo
                 }
                 catch (Exception ex)
                 {
-                    //ex.StackTrace.
                     if (continuarLeyendo)
                     {
-                        Console.WriteLine("Error al leer datos: " + ex.Message);
-                        MessageBox.Show("Error al leer datos, error: " + ex.Message, "Error leerDatosBalanzaAsync", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                        cmdStop_Click(null, null);
+                        LogDatosRecividos("Error al leer: " + ex.Message);
                     }
-
                 }
-                Console.WriteLine("Leeee#########################################");
-
             }
-            Console.WriteLine("termina********************************");
         }
+
 
         private void txtHandshake_TextChanged(object sender, EventArgs e)
         {
