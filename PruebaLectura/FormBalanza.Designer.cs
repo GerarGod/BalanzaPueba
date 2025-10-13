@@ -36,9 +36,6 @@
             this.label1 = new System.Windows.Forms.Label();
             this.cmdStart = new System.Windows.Forms.Button();
             this.cmdStop = new System.Windows.Forms.Button();
-            this.groupBox3 = new System.Windows.Forms.GroupBox();
-            this.label4 = new System.Windows.Forms.Label();
-            this.txtLog = new System.Windows.Forms.TextBox();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.txtHandshake = new System.Windows.Forms.TextBox();
             this.label6 = new System.Windows.Forms.Label();
@@ -52,7 +49,6 @@
             this.label14 = new System.Windows.Forms.Label();
             this.label15 = new System.Windows.Forms.Label();
             this.txtPuertoSerie = new System.Windows.Forms.TextBox();
-            this.groupBox3.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -65,7 +61,6 @@
             this.txtTara.Size = new System.Drawing.Size(69, 25);
             this.txtTara.TabIndex = 35;
             this.txtTara.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            //this.txtTara.TextChanged += new System.EventHandler(this.txtTara_TextChanged);
             // 
             // label11
             // 
@@ -77,7 +72,6 @@
             this.label11.Size = new System.Drawing.Size(34, 17);
             this.label11.TabIndex = 34;
             this.label11.Text = "Tara";
-            //this.label11.Click += new System.EventHandler(this.label11_Click);
             // 
             // txtPesoTotal
             // 
@@ -88,7 +82,6 @@
             this.txtPesoTotal.Size = new System.Drawing.Size(69, 25);
             this.txtPesoTotal.TabIndex = 33;
             this.txtPesoTotal.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-           // this.txtPesoTotal.TextChanged += new System.EventHandler(this.txtPesoTotal_TextChanged);
             // 
             // label2
             // 
@@ -100,7 +93,6 @@
             this.label2.Size = new System.Drawing.Size(72, 17);
             this.label2.TabIndex = 32;
             this.label2.Text = "Peso Total";
-           // this.label2.Click += new System.EventHandler(this.label2_Click);
             // 
             // txtPeso
             // 
@@ -111,7 +103,6 @@
             this.txtPeso.Size = new System.Drawing.Size(69, 25);
             this.txtPeso.TabIndex = 31;
             this.txtPeso.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-           // this.txtPeso.TextChanged += new System.EventHandler(this.txtPeso_TextChanged);
             // 
             // label1
             // 
@@ -123,7 +114,6 @@
             this.label1.Size = new System.Drawing.Size(37, 17);
             this.label1.TabIndex = 30;
             this.label1.Text = "Peso";
-            //this.label1.Click += new System.EventHandler(this.label1_Click);
             // 
             // cmdStart
             // 
@@ -162,40 +152,6 @@
             this.cmdStop.UseVisualStyleBackColor = false;
             this.cmdStop.Click += new System.EventHandler(this.cmdStop_Click);
             // 
-            // groupBox3
-            // 
-            this.groupBox3.Controls.Add(this.label4);
-            this.groupBox3.Controls.Add(this.txtLog);
-            this.groupBox3.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold);
-            this.groupBox3.ForeColor = System.Drawing.SystemColors.MenuHighlight;
-            this.groupBox3.Location = new System.Drawing.Point(515, 337);
-            this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(370, 62);
-            this.groupBox3.TabIndex = 37;
-            this.groupBox3.TabStop = false;
-            this.groupBox3.Text = "Log";
-            // 
-            // label4
-            // 
-            this.label4.AutoSize = true;
-            this.label4.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold);
-            this.label4.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.label4.Location = new System.Drawing.Point(11, 35);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(111, 17);
-            this.label4.TabIndex = 5;
-            this.label4.Text = "Datos Recibidos:";
-            // 
-            // txtLog
-            // 
-            this.txtLog.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold);
-            this.txtLog.Location = new System.Drawing.Point(128, 27);
-            this.txtLog.MaxLength = 1;
-            this.txtLog.Name = "txtLog";
-            this.txtLog.Size = new System.Drawing.Size(43, 25);
-            this.txtLog.TabIndex = 4;
-            this.txtLog.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            // 
             // groupBox1
             // 
             this.groupBox1.Controls.Add(this.txtHandshake);
@@ -218,7 +174,6 @@
             this.groupBox1.TabIndex = 36;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Puerto";
-            //this.groupBox1.Enter += new System.EventHandler(this.groupBox1_Enter);
             // 
             // txtHandshake
             // 
@@ -226,11 +181,13 @@
             this.txtHandshake.Name = "txtHandshake";
             this.txtHandshake.Size = new System.Drawing.Size(139, 29);
             this.txtHandshake.TabIndex = 20;
+            this.txtHandshake.Text = "0";
+            this.txtHandshake.TextChanged += new System.EventHandler(this.txtHandshake_TextChanged);
             // 
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(33, 199);
+            this.label6.Location = new System.Drawing.Point(11, 198);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(95, 21);
             this.label6.TabIndex = 19;
@@ -247,7 +204,7 @@
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(24, 167);
+            this.label5.Location = new System.Drawing.Point(11, 166);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(174, 21);
             this.label5.TabIndex = 17;
@@ -341,7 +298,6 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(929, 450);
-            this.Controls.Add(this.groupBox3);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.txtTara);
             this.Controls.Add(this.label11);
@@ -353,8 +309,7 @@
             this.Controls.Add(this.cmdStop);
             this.Name = "FormBalanza";
             this.Text = "Form1";
-            this.groupBox3.ResumeLayout(false);
-            this.groupBox3.PerformLayout();
+            this.Load += new System.EventHandler(this.FormBalanza_Load_1);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             this.ResumeLayout(false);
@@ -372,9 +327,6 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Button cmdStart;
         private System.Windows.Forms.Button cmdStop;
-        private System.Windows.Forms.GroupBox groupBox3;
-        private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.TextBox txtLog;
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.TextBox txtBitsDatos;
         private System.Windows.Forms.TextBox txtBaudios;

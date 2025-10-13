@@ -14,7 +14,7 @@ namespace PruebaLectura
         public static string strConfigSerialPortName = "";
         public static string strConfigSerialPortBaudios = "";
         public static string strConfigSerialPortParity = "";
-        public static string strConfigSerialPortBitsDatos = "";
+        public static string strConfigSerialPortBitsDatos = "S";
         public static string strConfigserialPortBitsStopBits = "";
 
 
