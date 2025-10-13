@@ -81,6 +81,7 @@ namespace PruebaLectura
             {
                 //; Configurar la velocidad de transmisión, paridad, bits de datos y bits de parada.ej:9600,E,7,2
                 //Settings = 9600,E,7,2
+             /*
                 serialPort = new SerialPort();
                 serialPort.PortName = ClsGlobalVariables.strConfigSerialPortName;
                 serialPort.BaudRate = int.Parse(ClsGlobalVariables.strConfigSerialPortBaudios);
@@ -88,7 +89,8 @@ namespace PruebaLectura
                 serialPort.Parity = (Parity)int.Parse(ClsGlobalVariables.strConfigSerialPortParity);
                 serialPort.StopBits = (StopBits)int.Parse(ClsGlobalVariables.strConfigserialPortBitsStopBits);
                 serialPort.Handshake = (Handshake)int.Parse(ClsGlobalVariables.strHandshake); 
-                /*
+                */
+                
                 serialPort = new SerialPort();
                 serialPort.PortName = ClsGlobalVariables.strConfigSerialPortName;
                 serialPort.BaudRate = 9600;              // o el que corresponda
@@ -98,7 +100,7 @@ namespace PruebaLectura
                 serialPort.Handshake = Handshake.None;   // o Handshake.RequestToSend si realmente necesitás control de flujo HW
                 serialPort.Encoding = Encoding.ASCII;    // para que no meta '?' por bytes fuera del rango ASCII
                 serialPort.NewLine = "\r\n";             // CR+LF de fin de mensaje
-                */
+                
 
 
 
@@ -193,10 +195,10 @@ namespace PruebaLectura
                         // Obtener la fecha y hora actual
                         DateTime now = DateTime.Now;
                         string strArchivo = $"{now:yyyyMMdd_HHmmss}";
-                        nombreArchivo = $"{strArchivo}.txt";
+                        nombreArchivo = $"{strArchivo}_FullParametros.txt";
 
                         // Abre el archivo de texto para registro continuo de datos
-                        logFile = new StreamWriter($"{strArchivo}_log.txt", true); // 'true' para añadir datos al final del archivo existente
+                        logFile = new StreamWriter(nombreArchivo, true); // 'true' para añadir datos al final del archivo existente
                         logFile.AutoFlush = true; // Asegura que los datos se escriban inmediatamente en el archivo
                     }
 
@@ -333,6 +335,16 @@ namespace PruebaLectura
         {
 
         }
+
+        private void label15_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void txtBitsDatos_TextChanged(object sender, EventArgs e)
+        {
+
+        }
         /*
 private void txtTara_TextChanged(object sender, EventArgs e)
 {
@@ -376,104 +388,104 @@ private void cmdGenerarTK_Click(object sender, EventArgs e)
 
 if (txtCertificado.Text.Length == 0)
 {
-    MessageBox.Show("El campo ''Certificado'' no puede estar sin datos", "Generarndo Impresion", MessageBoxButtons.OK, MessageBoxIcon.Information);
-    txtCertificado.Focus();
-    return;
+MessageBox.Show("El campo ''Certificado'' no puede estar sin datos", "Generarndo Impresion", MessageBoxButtons.OK, MessageBoxIcon.Information);
+txtCertificado.Focus();
+return;
 }
 if (txtValidadCert.Text.Length == 0)
 {
-    MessageBox.Show("El campo ''Validad Cert'' no puede estar sin datos", "Generarndo Impresion", MessageBoxButtons.OK, MessageBoxIcon.Information);
-    txtValidadCert.Focus();
-    return;
+MessageBox.Show("El campo ''Validad Cert'' no puede estar sin datos", "Generarndo Impresion", MessageBoxButtons.OK, MessageBoxIcon.Information);
+txtValidadCert.Focus();
+return;
 }
 
 if (txtNroPermisoEmbarque.Text.Length == 0)
 {
 
-    MessageBox.Show("El campo ''Nro de Permiso de Embarque'' no puede estar sin datos", "Generarndo Impresion", MessageBoxButtons.OK, MessageBoxIcon.Information);
-    txtNroPermisoEmbarque.Focus();
-    return;
+MessageBox.Show("El campo ''Nro de Permiso de Embarque'' no puede estar sin datos", "Generarndo Impresion", MessageBoxButtons.OK, MessageBoxIcon.Information);
+txtNroPermisoEmbarque.Focus();
+return;
 }
 if (txtIDContenedor.Text.Length == 0)
 {
-    MessageBox.Show("El campo ''ID de Contenedor'' no puede estar sin datos", "Generarndo Impresion", MessageBoxButtons.OK, MessageBoxIcon.Information);
-    txtIDContenedor.Focus();
-    return;
+MessageBox.Show("El campo ''ID de Contenedor'' no puede estar sin datos", "Generarndo Impresion", MessageBoxButtons.OK, MessageBoxIcon.Information);
+txtIDContenedor.Focus();
+return;
 }
 if ((txtIdentificadorBulto.Text.Length + txtIdentificadorBultoNro.Text.Length) == 0)
 {
-    MessageBox.Show("El campo ''Identificador de Bulto'' no puede estar sin datos", "Generarndo Impresion", MessageBoxButtons.OK, MessageBoxIcon.Information);
-    txtIdentificadorBulto.Focus();
-    return;
+MessageBox.Show("El campo ''Identificador de Bulto'' no puede estar sin datos", "Generarndo Impresion", MessageBoxButtons.OK, MessageBoxIcon.Information);
+txtIdentificadorBulto.Focus();
+return;
 }
 if (cmbMercaderia.Text.Length == 0)
 {
 
-    MessageBox.Show("El campo ''Descripcion de la Mercaderia'' no puede estar sin datos", "Generarndo Impresion", MessageBoxButtons.OK, MessageBoxIcon.Information);
-    cmbMercaderia.Focus();
-    return;
+MessageBox.Show("El campo ''Descripcion de la Mercaderia'' no puede estar sin datos", "Generarndo Impresion", MessageBoxButtons.OK, MessageBoxIcon.Information);
+cmbMercaderia.Focus();
+return;
 }
 
 if (txtPeso.Text.Length == 0)
 {
-    MessageBox.Show("El campo ''Peso (KG)'' no puede estar sin datos", "Generarndo Impresion", MessageBoxButtons.OK, MessageBoxIcon.Information);
-    return;
+MessageBox.Show("El campo ''Peso (KG)'' no puede estar sin datos", "Generarndo Impresion", MessageBoxButtons.OK, MessageBoxIcon.Information);
+return;
 }
 cmdStop_Click(null, null);
 try
 {
-    // ClsTicketEntidad objTicket;
-    ClsGlobalVariables.objImpresion.FechaHora = DateTime.Now;
-    ClsGlobalVariables.objImpresion.NroPermEmbarque = txtNroPermisoEmbarque.Text;
-    ClsGlobalVariables.objImpresion.IdContenedor = txtIDContenedor.Text;
-    ClsGlobalVariables.objImpresion.IdentificadorBulto = txtIdentificadorBulto.Text + txtIdentificadorBultoNro.Text;
-    ClsGlobalVariables.objImpresion.IdMercaderia = cmbMercaderia.SelectedValue.ToString();
-    ClsGlobalVariables.objImpresion.Mercaderia = cmbMercaderia.Text;
-    ClsGlobalVariables.objImpresion.Peso = txtPeso.Text;
+// ClsTicketEntidad objTicket;
+ClsGlobalVariables.objImpresion.FechaHora = DateTime.Now;
+ClsGlobalVariables.objImpresion.NroPermEmbarque = txtNroPermisoEmbarque.Text;
+ClsGlobalVariables.objImpresion.IdContenedor = txtIDContenedor.Text;
+ClsGlobalVariables.objImpresion.IdentificadorBulto = txtIdentificadorBulto.Text + txtIdentificadorBultoNro.Text;
+ClsGlobalVariables.objImpresion.IdMercaderia = cmbMercaderia.SelectedValue.ToString();
+ClsGlobalVariables.objImpresion.Mercaderia = cmbMercaderia.Text;
+ClsGlobalVariables.objImpresion.Peso = txtPeso.Text;
 
 
-    if (!ClsGlobalVariables.objImpresion.InsertarImpresion())
-    {
-        MessageBox.Show("No pudo guardar los datos del Ticket en la base de datos", "Guardando Ticket", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-        return;
-    }
+if (!ClsGlobalVariables.objImpresion.InsertarImpresion())
+{
+MessageBox.Show("No pudo guardar los datos del Ticket en la base de datos", "Guardando Ticket", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+return;
+}
 
-    //cargo el reporte 
-    FormTK objReporte = new FormTK();
+//cargo el reporte 
+FormTK objReporte = new FormTK();
 
-    objReporte.objTicket = ClsGlobalVariables.objImpresion;
+objReporte.objTicket = ClsGlobalVariables.objImpresion;
 
-    objReporte.SetearReporte();
+objReporte.SetearReporte();
 
-    if (rdbGenerarArchivo.Checked)
-    {
-        objReporte.SaveReportToPdf2();
-    }
-    if (rdbGenerarArchivoVisualizar.Checked)
-    {
-        objReporte.SaveReportToPdf2();
-        objReporte.ShowDialog();
+if (rdbGenerarArchivo.Checked)
+{
+objReporte.SaveReportToPdf2();
+}
+if (rdbGenerarArchivoVisualizar.Checked)
+{
+objReporte.SaveReportToPdf2();
+objReporte.ShowDialog();
 
-    }
-    if (rdbVisualizar.Checked)
-    {
-        objReporte.ShowDialog();
-    }
+}
+if (rdbVisualizar.Checked)
+{
+objReporte.ShowDialog();
+}
 
-    if (!ClsGlobalVariables.objImpresion.ObtenerProximoNroTk())
-    {
-        return;
-    }
+if (!ClsGlobalVariables.objImpresion.ObtenerProximoNroTk())
+{
+return;
+}
 
 }
 catch (Exception ex)
 {
 
-    MessageBox.Show(String.Format("Error Generardo Ticket. Error:{0},{1}", Environment.NewLine, ex.Message), "Generando Impresion", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+MessageBox.Show(String.Format("Error Generardo Ticket. Error:{0},{1}", Environment.NewLine, ex.Message), "Generando Impresion", MessageBoxButtons.OK, MessageBoxIcon.Warning);
 }
 finally
 {
-    cmdStart_Click(null, null);
+cmdStart_Click(null, null);
 }
 
 }
@@ -531,7 +543,7 @@ private void FormBalanza_FormClosing(object sender, FormClosingEventArgs e)
 cmdStop_Click(null, null);
 if (logFile != null)
 {
-    logFile.Close();
+logFile.Close();
 }
 }*/
     }

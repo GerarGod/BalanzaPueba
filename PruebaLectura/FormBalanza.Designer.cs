@@ -235,8 +235,9 @@
             this.txtBitsDatos.Name = "txtBitsDatos";
             this.txtBitsDatos.Size = new System.Drawing.Size(78, 25);
             this.txtBitsDatos.TabIndex = 14;
-            this.txtBitsDatos.Text = "8";
+            this.txtBitsDatos.Text = "7";
             this.txtBitsDatos.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.txtBitsDatos.TextChanged += new System.EventHandler(this.txtBitsDatos_TextChanged);
             // 
             // txtBaudios
             // 
@@ -281,6 +282,7 @@
             this.label15.Size = new System.Drawing.Size(80, 17);
             this.label15.TabIndex = 5;
             this.label15.Text = "Nro Puerto:";
+            this.label15.Click += new System.EventHandler(this.label15_Click);
             // 
             // txtPuertoSerie
             // 
