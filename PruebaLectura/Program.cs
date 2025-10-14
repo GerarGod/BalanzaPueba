@@ -16,7 +16,8 @@ namespace PruebaLectura
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new FormBalanza());
+            //Application.Run(new FormBalanza());
+            Application.Run(new FormConfigSerial());
         }
     }
 }
