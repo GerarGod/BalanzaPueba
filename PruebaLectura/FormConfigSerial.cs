@@ -399,6 +399,7 @@ namespace PruebaLectura
                     {
                         // Fin de mensaje
                         LogDatosRecividos("Mensaje recibido: " + mensaje);
+                        ObtenerCodigosAscii(mensaje);
 
                         // Ejemplo: *0 000006000000
                         if (mensaje.Length >= 14)
@@ -415,9 +416,6 @@ namespace PruebaLectura
                                 {
                                     Total = "0";
                                 }
-
-                                
-
                                 this.Invoke((Action)(() =>
                                 {
                                     txtPeso.Text = peso;
@@ -425,8 +423,6 @@ namespace PruebaLectura
                                     txtPesoTotal.Text = Total;
 
                                 }));
-
-
                                 if (lstLectura.InvokeRequired)
                                 {
                                     lstLectura.Invoke(new Action(() =>
@@ -440,14 +436,6 @@ namespace PruebaLectura
                                     lstLectura.Items.Add(peso + " - " + tara);
                                     lstLectura.TopIndex = lstResultados.Items.Count - 1;
                                 }
-
-
-
-
-
-
-
-
                                 LogDatosRecividos($"Peso:{peso} Tara:{tara}");
                             }
                             catch (Exception ex)
@@ -475,6 +463,21 @@ namespace PruebaLectura
                     }
                 }
             }
+        }
+        private void ObtenerCodigosAscii(string cadena)
+        {
+            char[] caracteres = cadena.ToCharArray();
+            int[] codigosAscii = new int[caracteres.Length];
+            string srtcadena;
+
+            for (int i = 0; i < caracteres.Length; i++)
+            {
+                codigosAscii[i] = Convert.ToInt32(caracteres[i]);
+                srtcadena = "caracteres:" + caracteres[i] + "-codigosAscii:" + codigosAscii[i].ToString();
+                LogDatosRecividos(srtcadena);
+
+            }
+
         }
         private void LogDatosRecividos(string strDatos)
         {
