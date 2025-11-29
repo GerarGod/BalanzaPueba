@@ -227,6 +227,7 @@ namespace PruebaLectura
 
         private void cmdStart_Click(object sender, EventArgs e)
         {
+
             try
             {
                 // 🔹 1. Leer valores desde App.config
