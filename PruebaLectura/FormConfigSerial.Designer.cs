@@ -61,17 +61,18 @@
             this.cmdStop = new System.Windows.Forms.Button();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.lstLectura = new System.Windows.Forms.ListBox();
+            this.cmdConfigGuardada = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.SuspendLayout();
             // 
             // cmdDetectar
             // 
-            this.cmdDetectar.Location = new System.Drawing.Point(14, 25);
+            this.cmdDetectar.Location = new System.Drawing.Point(15, 99);
             this.cmdDetectar.Name = "cmdDetectar";
-            this.cmdDetectar.Size = new System.Drawing.Size(171, 27);
+            this.cmdDetectar.Size = new System.Drawing.Size(171, 30);
             this.cmdDetectar.TabIndex = 2;
-            this.cmdDetectar.Text = "Detectar";
+            this.cmdDetectar.Text = "Detectar Config.";
             this.cmdDetectar.UseVisualStyleBackColor = true;
             this.cmdDetectar.Click += new System.EventHandler(this.cmdDetectar_Click);
             // 
@@ -82,7 +83,7 @@
             this.lstResultados.ItemHeight = 16;
             this.lstResultados.Location = new System.Drawing.Point(205, 54);
             this.lstResultados.Name = "lstResultados";
-            this.lstResultados.Size = new System.Drawing.Size(571, 324);
+            this.lstResultados.Size = new System.Drawing.Size(571, 388);
             this.lstResultados.TabIndex = 3;
             this.lstResultados.SelectedIndexChanged += new System.EventHandler(this.lstResultados_SelectedIndexChanged);
             // 
@@ -98,13 +99,14 @@
             // cmbPuertos
             // 
             this.cmbPuertos.FormattingEnabled = true;
-            this.cmbPuertos.Location = new System.Drawing.Point(105, 54);
+            this.cmbPuertos.Location = new System.Drawing.Point(106, 26);
             this.cmbPuertos.Name = "cmbPuertos";
             this.cmbPuertos.Size = new System.Drawing.Size(80, 29);
             this.cmbPuertos.TabIndex = 5;
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.cmdConfigGuardada);
             this.groupBox1.Controls.Add(this.cmdGuardarConfig);
             this.groupBox1.Controls.Add(this.txtReadTimeout);
             this.groupBox1.Controls.Add(this.cmbPuertos);
@@ -131,14 +133,14 @@
             this.groupBox1.ForeColor = System.Drawing.SystemColors.MenuHighlight;
             this.groupBox1.Location = new System.Drawing.Point(12, 12);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(793, 415);
+            this.groupBox1.Size = new System.Drawing.Size(793, 448);
             this.groupBox1.TabIndex = 37;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Puerto Configuracion";
             // 
             // cmdGuardarConfig
             // 
-            this.cmdGuardarConfig.Location = new System.Drawing.Point(14, 340);
+            this.cmdGuardarConfig.Location = new System.Drawing.Point(14, 394);
             this.cmdGuardarConfig.Name = "cmdGuardarConfig";
             this.cmdGuardarConfig.Size = new System.Drawing.Size(171, 40);
             this.cmdGuardarConfig.TabIndex = 27;
@@ -149,7 +151,7 @@
             // txtReadTimeout
             // 
             this.txtReadTimeout.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold);
-            this.txtReadTimeout.Location = new System.Drawing.Point(105, 309);
+            this.txtReadTimeout.Location = new System.Drawing.Point(105, 363);
             this.txtReadTimeout.MaxLength = 1;
             this.txtReadTimeout.Name = "txtReadTimeout";
             this.txtReadTimeout.Size = new System.Drawing.Size(80, 25);
@@ -159,7 +161,7 @@
             // txtNewLine
             // 
             this.txtNewLine.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold);
-            this.txtNewLine.Location = new System.Drawing.Point(105, 277);
+            this.txtNewLine.Location = new System.Drawing.Point(105, 331);
             this.txtNewLine.MaxLength = 6;
             this.txtNewLine.Name = "txtNewLine";
             this.txtNewLine.Size = new System.Drawing.Size(80, 25);
@@ -171,7 +173,7 @@
             this.label6.AutoSize = true;
             this.label6.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold);
             this.label6.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.label6.Location = new System.Drawing.Point(11, 309);
+            this.label6.Location = new System.Drawing.Point(11, 363);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(90, 17);
             this.label6.TabIndex = 24;
@@ -182,7 +184,7 @@
             this.label7.AutoSize = true;
             this.label7.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold);
             this.label7.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.label7.Location = new System.Drawing.Point(11, 278);
+            this.label7.Location = new System.Drawing.Point(11, 332);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(78, 17);
             this.label7.TabIndex = 23;
@@ -193,7 +195,7 @@
             this.label8.AutoSize = true;
             this.label8.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold);
             this.label8.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.label8.Location = new System.Drawing.Point(12, 249);
+            this.label8.Location = new System.Drawing.Point(12, 303);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(65, 17);
             this.label8.TabIndex = 22;
@@ -202,7 +204,7 @@
             // txtEncoding
             // 
             this.txtEncoding.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold);
-            this.txtEncoding.Location = new System.Drawing.Point(105, 246);
+            this.txtEncoding.Location = new System.Drawing.Point(105, 300);
             this.txtEncoding.MaxLength = 6;
             this.txtEncoding.Name = "txtEncoding";
             this.txtEncoding.Size = new System.Drawing.Size(80, 25);
@@ -212,7 +214,7 @@
             // txtHandshake
             // 
             this.txtHandshake.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold);
-            this.txtHandshake.Location = new System.Drawing.Point(105, 215);
+            this.txtHandshake.Location = new System.Drawing.Point(105, 269);
             this.txtHandshake.MaxLength = 1;
             this.txtHandshake.Name = "txtHandshake";
             this.txtHandshake.Size = new System.Drawing.Size(80, 25);
@@ -222,7 +224,7 @@
             // txtStopBits
             // 
             this.txtStopBits.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold);
-            this.txtStopBits.Location = new System.Drawing.Point(105, 183);
+            this.txtStopBits.Location = new System.Drawing.Point(105, 237);
             this.txtStopBits.MaxLength = 6;
             this.txtStopBits.Name = "txtStopBits";
             this.txtStopBits.Size = new System.Drawing.Size(80, 25);
@@ -234,7 +236,7 @@
             this.label3.AutoSize = true;
             this.label3.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold);
             this.label3.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.label3.Location = new System.Drawing.Point(11, 218);
+            this.label3.Location = new System.Drawing.Point(11, 272);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(76, 17);
             this.label3.TabIndex = 18;
@@ -245,7 +247,7 @@
             this.label4.AutoSize = true;
             this.label4.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold);
             this.label4.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.label4.Location = new System.Drawing.Point(12, 186);
+            this.label4.Location = new System.Drawing.Point(12, 240);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(59, 17);
             this.label4.TabIndex = 17;
@@ -256,7 +258,7 @@
             this.label5.AutoSize = true;
             this.label5.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold);
             this.label5.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.label5.Location = new System.Drawing.Point(11, 155);
+            this.label5.Location = new System.Drawing.Point(11, 209);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(44, 17);
             this.label5.TabIndex = 16;
@@ -265,7 +267,7 @@
             // txtParity
             // 
             this.txtParity.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold);
-            this.txtParity.Location = new System.Drawing.Point(105, 152);
+            this.txtParity.Location = new System.Drawing.Point(105, 206);
             this.txtParity.MaxLength = 6;
             this.txtParity.Name = "txtParity";
             this.txtParity.Size = new System.Drawing.Size(80, 25);
@@ -275,7 +277,7 @@
             // txtDataBits
             // 
             this.txtDataBits.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold);
-            this.txtDataBits.Location = new System.Drawing.Point(105, 121);
+            this.txtDataBits.Location = new System.Drawing.Point(105, 175);
             this.txtDataBits.MaxLength = 1;
             this.txtDataBits.Name = "txtDataBits";
             this.txtDataBits.Size = new System.Drawing.Size(80, 25);
@@ -285,7 +287,7 @@
             // txtBaudRate
             // 
             this.txtBaudRate.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold);
-            this.txtBaudRate.Location = new System.Drawing.Point(105, 89);
+            this.txtBaudRate.Location = new System.Drawing.Point(105, 143);
             this.txtBaudRate.MaxLength = 6;
             this.txtBaudRate.Name = "txtBaudRate";
             this.txtBaudRate.Size = new System.Drawing.Size(80, 25);
@@ -297,7 +299,7 @@
             this.label13.AutoSize = true;
             this.label13.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold);
             this.label13.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.label13.Location = new System.Drawing.Point(11, 121);
+            this.label13.Location = new System.Drawing.Point(11, 175);
             this.label13.Name = "label13";
             this.label13.Size = new System.Drawing.Size(60, 17);
             this.label13.TabIndex = 11;
@@ -308,7 +310,7 @@
             this.label14.AutoSize = true;
             this.label14.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold);
             this.label14.ForeColor = System.Drawing.Color.Black;
-            this.label14.Location = new System.Drawing.Point(11, 90);
+            this.label14.Location = new System.Drawing.Point(11, 144);
             this.label14.Name = "label14";
             this.label14.Size = new System.Drawing.Size(66, 17);
             this.label14.TabIndex = 6;
@@ -319,7 +321,7 @@
             this.label15.AutoSize = true;
             this.label15.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold);
             this.label15.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.label15.Location = new System.Drawing.Point(11, 65);
+            this.label15.Location = new System.Drawing.Point(12, 37);
             this.label15.Name = "label15";
             this.label15.Size = new System.Drawing.Size(70, 17);
             this.label15.TabIndex = 5;
@@ -440,7 +442,7 @@
             this.groupBox2.ForeColor = System.Drawing.SystemColors.MenuHighlight;
             this.groupBox2.Location = new System.Drawing.Point(811, 21);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(290, 406);
+            this.groupBox2.Size = new System.Drawing.Size(290, 439);
             this.groupBox2.TabIndex = 46;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Test Lesctura";
@@ -452,14 +454,25 @@
             this.lstLectura.ItemHeight = 16;
             this.lstLectura.Location = new System.Drawing.Point(13, 149);
             this.lstLectura.Name = "lstLectura";
-            this.lstLectura.Size = new System.Drawing.Size(243, 212);
+            this.lstLectura.Size = new System.Drawing.Size(243, 276);
             this.lstLectura.TabIndex = 46;
+            // 
+            // cmdConfigGuardada
+            // 
+            this.cmdConfigGuardada.Location = new System.Drawing.Point(15, 61);
+            this.cmdConfigGuardada.Name = "cmdConfigGuardada";
+            this.cmdConfigGuardada.Size = new System.Drawing.Size(171, 30);
+            this.cmdConfigGuardada.TabIndex = 28;
+            this.cmdConfigGuardada.Tag = "";
+            this.cmdConfigGuardada.Text = "Config. Guardada";
+            this.cmdConfigGuardada.UseVisualStyleBackColor = true;
+            this.cmdConfigGuardada.Click += new System.EventHandler(this.cmdConfigGuardada_Click);
             // 
             // FormConfigSerial
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1116, 437);
+            this.ClientSize = new System.Drawing.Size(1116, 472);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);
             this.Name = "FormConfigSerial";
@@ -507,5 +520,6 @@
         private System.Windows.Forms.Button cmdStop;
         private System.Windows.Forms.GroupBox groupBox2;
         private System.Windows.Forms.ListBox lstLectura;
+        private System.Windows.Forms.Button cmdConfigGuardada;
     }
 }

@@ -173,40 +173,6 @@ namespace PruebaLectura
             }
 
             LogToUI("❌ No se encontró una configuración válida.");
-        }
-        /*
-                private void cmdGuardarConfig_Click(object sender, EventArgs e)
-                {
-                    try
-                    {
-                        string fileName = "configuracion_balanza.txt";
-                        using (StreamWriter sw = new StreamWriter(fileName, false))
-                        {
-                            sw.WriteLine($"PortName={cmbPuertos.Text}");
-                            sw.WriteLine($"BaudRate={txtBaudRate.Text}");
-                            sw.WriteLine($"DataBits={txtDataBits.Text}");
-                            sw.WriteLine($"Parity={txtParity.Text}");
-                            sw.WriteLine($"StopBits={txtStopBits.Text}");
-                            sw.WriteLine($"Handshake={txtHandshake.Text}");
-                            sw.WriteLine($"Encoding={txtEncoding.Text}");
-                            sw.WriteLine($"NewLine={txtNewLine.Text}");
-                            sw.WriteLine($"ReadTimeout={txtReadTimeout.Text}");
-                        }
-
-                        MessageBox.Show($"Configuración guardada correctamente en {Path.GetFullPath(fileName)}",
-                            "Configuración guardada",
-                            MessageBoxButtons.OK,
-                            MessageBoxIcon.Information);
-                    }
-                    catch (Exception ex)
-                    {
-                        MessageBox.Show("Error al guardar la configuración: " + ex.Message,
-                            "Error",
-                            MessageBoxButtons.OK,
-                            MessageBoxIcon.Error);
-                    }
-                }
-                */
         private void cmdGuardarConfig_Click(object sender, EventArgs e)
         {
             try
@@ -529,6 +495,11 @@ namespace PruebaLectura
         }
 
         private void lstResultados_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void cmdConfigGuardada_Click(object sender, EventArgs e)
         {
 
         }
