@@ -173,46 +173,33 @@ namespace PruebaLectura
             }
 
             LogToUI("❌ No se encontró una configuración válida.");
+        }
         private void cmdGuardarConfig_Click(object sender, EventArgs e)
         {
             try
             {
-                // Obtener el archivo de configuración
-                Configuration config = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
+                var cfg = new SerialConfig
+                {
+                    PortName = cmbPuertos.Text,
+                    BaudRate = int.Parse(txtBaudRate.Text),
+                    DataBits = int.Parse(txtDataBits.Text),
+                    Parity = (Parity)Enum.Parse(typeof(Parity), txtParity.Text),
+                    StopBits = (StopBits)Enum.Parse(typeof(StopBits), txtStopBits.Text),
+                    Handshake = (Handshake)Enum.Parse(typeof(Handshake), txtHandshake.Text),
+                    EncodingName = txtEncoding.Text,
+                    NewLineHex = txtNewLine.Text,
+                    ReadTimeout = int.Parse(txtReadTimeout.Text)
+                };
 
-                // Actualizar o agregar las claves
-                SetAppSetting(config, "serialPortName", cmbPuertos.Text);
-                SetAppSetting(config, "serialPortBaudios", txtBaudRate.Text);
-                SetAppSetting(config, "serialPortBitsDatos", txtDataBits.Text);
+                SerialConfigManager.Save(cfg);
 
-                // Parity (en valor numérico)
-                int parityValue = (int)Enum.Parse(typeof(Parity), txtParity.Text);
-                SetAppSetting(config, "serialPortParity", parityValue.ToString());
-
-                // StopBits (en valor numérico)
-                int stopBitsValue = (int)Enum.Parse(typeof(StopBits), txtStopBits.Text);
-                SetAppSetting(config, "serialPortBitsStopBits", stopBitsValue.ToString());
-
-                SetAppSetting(config, "serialPortHandshake", txtHandshake.Text);
-                SetAppSetting(config, "serialPortEncoding", txtEncoding.Text);
-                SetAppSetting(config, "serialPortNewLine", txtNewLine.Text);
-                SetAppSetting(config, "serialPortReadTimeout", txtReadTimeout.Text);
-
-                // Guardar cambios
-                config.Save(ConfigurationSaveMode.Modified);
-                ConfigurationManager.RefreshSection("appSettings");
-
-                MessageBox.Show("Configuración guardada correctamente en App.config.",
-                    "Configuración guardada",
-                    MessageBoxButtons.OK,
-                    MessageBoxIcon.Information);
+                MessageBox.Show("Configuración guardada correctamente.",
+                    "Configuración", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Error al guardar la configuración: " + ex.Message,
-                    "Error",
-                    MessageBoxButtons.OK,
-                    MessageBoxIcon.Error);
+                MessageBox.Show("Error al guardar configuración: " + ex.Message,
+                    "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -224,79 +211,68 @@ namespace PruebaLectura
             else
                 config.AppSettings.Settings[key].Value = value;
         }
-
         private void cmdStart_Click(object sender, EventArgs e)
         {
+            SerialConfig cfg;
+
+            try
+            {   
+                // 1️⃣ Cargar configuración del App.config
+                cfg = SerialConfigManager.Load();
+                // 2️⃣ Mostrar valores en pantalla (opcional)
+                MostrarConfiguracionEnTexto(cfg);
+
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error leyendo configuración:{Environment.NewLine}{ex.Message}",
+                    "Configuración", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
 
             try
             {
-                // 🔹 1. Leer valores desde App.config
-                string portName = ConfigurationManager.AppSettings["serialPortName"];
-                int baudRate = int.Parse(ConfigurationManager.AppSettings["serialPortBaudios"]);
-                int dataBits = int.Parse(ConfigurationManager.AppSettings["serialPortBitsDatos"]);
-                Parity parity = (Parity)int.Parse(ConfigurationManager.AppSettings["serialPortParity"]);
-                StopBits stopBits = (StopBits)int.Parse(ConfigurationManager.AppSettings["serialPortBitsStopBits"]);
-                Handshake handshake = (Handshake)Enum.Parse(typeof(Handshake), ConfigurationManager.AppSettings["serialPortHandshake"]);
-                string encodingName = ConfigurationManager.AppSettings["serialPortEncoding"];
-                string newLineHex = ConfigurationManager.AppSettings["serialPortNewLine"];
-                int readTimeout = int.Parse(ConfigurationManager.AppSettings["serialPortReadTimeout"]);
-
-                // 🔹 2. Mostrar los valores en los TextBox (por si querés verlos)
-                //txtPortName.Text = portName;
-                txtBaudRate.Text = baudRate.ToString();
-                txtDataBits.Text = dataBits.ToString();
-                txtParity.Text = parity.ToString();
-                txtStopBits.Text = stopBits.ToString();
-                txtHandshake.Text = handshake.ToString();
-                txtEncoding.Text = encodingName;
-                txtNewLine.Text = newLineHex;
-                txtReadTimeout.Text = readTimeout.ToString();
-
-                // 🔹 3. Crear y configurar el puerto serie
+                // 3️⃣ Crear y configurar el puerto serie
                 serialPort = new SerialPort
                 {
-                    PortName = portName,
-                    BaudRate = baudRate,
-                    DataBits = dataBits,
-                    Parity = parity,
-                    StopBits = stopBits,
-                    Handshake = handshake,
-                    Encoding = Encoding.GetEncoding(encodingName),
-                    ReadTimeout = readTimeout,
-                    NewLine = HexToAscii(newLineHex)
+                    PortName = cfg.PortName,
+                    BaudRate = cfg.BaudRate,
+                    DataBits = cfg.DataBits,
+                    Parity = cfg.Parity,
+                    StopBits = cfg.StopBits,
+                    Handshake = cfg.Handshake,
+                    Encoding = Encoding.GetEncoding(cfg.EncodingName),
+                    ReadTimeout = cfg.ReadTimeout,
+                    NewLine = SerialConfigManager.HexToAscii(cfg.NewLineHex)
                 };
 
-
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(String.Format("Error Configurando el Puerto. Error:{0},{1}", Environment.NewLine, ex.Message)
-                    , "Comfiguracion del Puerto",
-                    MessageBoxButtons.OK,
-                    MessageBoxIcon.Warning
-                    );
-                return;
-            }
-
-            try
-            {
-
-                // 🔹 4. Abrir el puerto
+                // 🟢 4️⃣ Abrir puerto y comenzar lectura
                 ComenzarLectura();
+                IniciarCampos();
             }
             catch (Exception ex)
             {
-                MessageBox.Show(String.Format("Error al Abrier el puerto. Error:{0},{1}", Environment.NewLine, ex.Message)
-                    , "Iniciando Comunicacion",
-                    MessageBoxButtons.OK,
-                    MessageBoxIcon.Warning
-                    );
-                return;
+                MessageBox.Show(
+                    $"Error abriendo el puerto:{Environment.NewLine}{ex.Message}",
+                    "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning
+                );
             }
-
-            IniciarCampos();
-        
         }
+
+        private void MostrarConfiguracionEnTexto(SerialConfig cfg )
+        {
+            // 2️⃣ Mostrar valores en pantalla (opcional)
+            txtBaudRate.Text = cfg.BaudRate.ToString();
+            txtDataBits.Text = cfg.DataBits.ToString();
+            txtParity.Text = cfg.Parity.ToString();
+            txtStopBits.Text = cfg.StopBits.ToString();
+            txtHandshake.Text = cfg.Handshake.ToString();
+            txtEncoding.Text = cfg.EncodingName;
+            txtNewLine.Text = cfg.NewLineHex;
+            txtReadTimeout.Text = cfg.ReadTimeout.ToString();
+        }
+
         private void ComenzarLectura()
         {
             serialPort.Open();
@@ -502,7 +478,22 @@ namespace PruebaLectura
 
         private void cmdConfigGuardada_Click(object sender, EventArgs e)
         {
+            SerialConfig cfg;
 
+            try
+            {
+                // 1️⃣ Cargar configuración del App.config
+                cfg = SerialConfigManager.Load();
+                // 2️⃣ Mostrar valores en pantalla (opcional)
+                MostrarConfiguracionEnTexto(cfg);
+
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error leyendo configuración:{Environment.NewLine}{ex.Message}",
+                    "Configuración", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
         }
     }
     /*
