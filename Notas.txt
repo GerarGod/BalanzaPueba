@@ -1,7 +1,14 @@
+######################-------------------PruebaLectura-------------------######################
+
 Este aplicativo detecta automaticamente los puetos com desponibles.
 Tambien escanea el puerto buscando automaticamente la señal de la balanza y detectando la configuracion optima 
 
----------------------------------
+######################---------------------Emulador----------------------######################
+Este Aplicativo simula mensajes como si fuese la balamza 
+
+
+######################-----------Virtual Serial Ports Emulator-----------######################
+
 Informacion del aplicativo con el que se realiza la conexcion de los com viurtules para probar con lo emuladores 
 
 
