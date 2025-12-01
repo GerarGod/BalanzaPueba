@@ -1,0 +1,32 @@
+Este aplicativo detecta automaticamente los puetos com desponibles.
+Tambien escanea el puerto buscando automaticamente la señal de la balanza y detectando la configuracion optima 
+
+---------------------------------
+Informacion del aplicativo con el que se realiza la conexcion de los com viurtules para probar con lo emuladores 
+
+
+Virtual Serial Ports Emulator (x64) 1.3.6.970
+Extended product info: -1
+TARGET_PLATFORM: x64
+Build: WIN64
+
+Command Line: "C:\Program Files\Eterlogic.com\Virtual Serial Ports Emulator (x64)\VSPEmulator.exe" 
+Module folder: C:\Program Files\Eterlogic.com\Virtual Serial Ports Emulator (x64)
+Config folder: C:\Users\ggodino\AppData\Local\Eterlogic\VSPE
+
+Windows version: Windows 10 Pro: mjr=10 rls=2009
+    versionEx: 6.2.9200.2
+
+Processor architecture: AMD64
+
+Kernel driver version: 3.001
+    name=KrushVirtControl
+    service=EterlogicVirtualSerialDriver
+    servicePath_exists=System\CurrentControlSet\Services\EterlogicVirtualSerialDriver
+    path=C:\Windows\system32\drivers\VSPE.sys
+
+Kernel driver loaded.
+
+VSPE configuration:
+Devices count: 1
+	Pair,Pair: COM1 <=> COM2,1: [1;2;0]
