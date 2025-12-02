@@ -56,7 +56,7 @@ namespace Emulador
         }*/
         static void Main(string[] args)
         {
-            SerialPort serialPort = new SerialPort("COM1", 9600, Parity.Even, 7, StopBits.Two);
+            SerialPort serialPort = new SerialPort("COM2", 9600, Parity.Even, 7, StopBits.Two);
             serialPort.Open();
             Random random = new Random();
             Random random2 = new Random();
